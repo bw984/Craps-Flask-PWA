@@ -3,6 +3,13 @@ from urllib import parse
 from decouple import config
 
 
+class Config:
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_DATABASE_URI = config('CONNECTION_STRING')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = config('SECRET_KEY')
+
+
 def _build_db_connection_string() -> str:
     db_user = config('db_user')
     db_password = config('db_password')
@@ -17,10 +24,3 @@ def _build_db_connection_string() -> str:
 
     connection_string = f'mssql+pyodbc:///?odbc_connect={params}'
     return connection_string
-
-
-class Config:
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-    SQLALCHEMY_DATABASE_URI = _build_db_connection_string()
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = config('SECRET_KEY')

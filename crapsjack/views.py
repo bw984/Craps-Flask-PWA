@@ -3,15 +3,15 @@ from crapsjack.forms import AddForm, DelForm
 from crapsjack.models import User
 from crapsjack import db
 
-craps_jack_blueprint = Blueprint('main', __name__)
+main_blueprint = Blueprint('main', __name__)
 
 
-@craps_jack_blueprint.route('/')
+@main_blueprint.route('/')
 def home():
     return render_template('index.html')
 
 
-@craps_jack_blueprint.route('/add_user', methods=['GET', 'POST'])
+@main_blueprint.route('/add_user', methods=['GET', 'POST'])
 def add_user():
     form = AddForm()
 
@@ -29,14 +29,14 @@ def add_user():
     return render_template('add.html', form=form)
 
 
-@craps_jack_blueprint.route('/list_users')
+@main_blueprint.route('/list_users')
 def list_users():
     # Grab a list of users from database.
     users = User.query.all()
     return render_template('list.html', users=users)
 
 
-@craps_jack_blueprint.route('/delete_user', methods=['GET', 'POST'])
+@main_blueprint.route('/delete_user', methods=['GET', 'POST'])
 def delete_user():
 
     form = DelForm()
