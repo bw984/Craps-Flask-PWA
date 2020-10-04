@@ -14,6 +14,8 @@ def create_app(base_dir: str):
     app.config.from_object(Config)
     # Initialize Plugins
     db.init_app(app)
+    login_manager.init_app(app)
+
     from crapsjack.models import User
     migrate.init_app(app, db)
 
@@ -23,5 +25,8 @@ def create_app(base_dir: str):
 
         # Register Blueprints
         app.register_blueprint(views.main_blueprint)
+        app.register_blueprint(auth.auth_bp)
 
+        # Create Database Models
+        db.create_all()
     return app

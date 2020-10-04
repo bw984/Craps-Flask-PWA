@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, url_for, render_template
 from crapsjack.forms import AddForm, DelForm
 from crapsjack.models import User
 from crapsjack import db
+from flask_login import login_required, logout_user
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -12,6 +13,7 @@ def home():
 
 
 @main_blueprint.route('/add_user', methods=['GET', 'POST'])
+@login_required
 def add_user():
     form = AddForm()
 
@@ -30,6 +32,7 @@ def add_user():
 
 
 @main_blueprint.route('/list_users')
+@login_required
 def list_users():
     # Grab a list of users from database.
     users = User.query.all()
@@ -37,6 +40,7 @@ def list_users():
 
 
 @main_blueprint.route('/delete_user', methods=['GET', 'POST'])
+@login_required
 def delete_user():
 
     form = DelForm()
@@ -49,3 +53,11 @@ def delete_user():
 
         return redirect(url_for('main.list_users'))
     return render_template('delete.html', form=form)
+
+
+@main_blueprint.route("/logout")
+@login_required
+def logout():
+    """User log-out logic."""
+    logout_user()
+    return redirect(url_for('auth_bp.login'))
