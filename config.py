@@ -23,3 +23,4 @@ class Config:
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_DATABASE_URI = _build_db_connection_string()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = config('SECRET_KEY')

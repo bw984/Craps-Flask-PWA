@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>List Of Users:</h1>
+    <ul>
+        {% for user in users %}
+            <li>DB ID: {{ user.id }} | Display Name: {{ user.username }} | Email Address: {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
